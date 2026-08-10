@@ -1,3 +1,4 @@
+// src/components/sections/MediumPostsSection.tsx
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { profile } from "@/data/portfolio";
 

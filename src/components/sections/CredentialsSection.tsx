@@ -1,3 +1,4 @@
+// src/components/sections/CredentialsSection.tsx
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { credentials } from "@/data/portfolio";
 

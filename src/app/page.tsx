@@ -1,3 +1,4 @@
+// src/app/page.tsx
 import type { Metadata } from "next";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { ProofSection } from "@/components/sections/ProofSection";
@@ -12,7 +13,7 @@ import { MediumPostsSection } from "@/components/sections/MediumPostsSection";
 import { ContactSection } from "@/components/sections/ContactSection";
 
 export const metadata: Metadata = {
-  title: "Software Engineer Portfolio",
+  title: "Ishara Dhanushan's Portfolio",
   description:
     "Ishara Dhanushan's software engineering portfolio, featuring full-stack applications, REST APIs, backend systems, and mobile projects.",
   alternates: { canonical: "/" },

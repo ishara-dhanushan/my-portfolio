@@ -1,3 +1,4 @@
+// src/components/sections/EducationSection.tsx
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { education } from "@/data/portfolio";
 

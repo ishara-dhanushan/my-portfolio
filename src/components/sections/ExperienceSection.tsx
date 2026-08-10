@@ -1,3 +1,4 @@
+// src/components/sections/ExperienceSection.tsx
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Tag } from "@/components/ui/Tag";
 import { experience } from "@/data/portfolio";

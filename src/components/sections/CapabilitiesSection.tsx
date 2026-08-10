@@ -1,3 +1,4 @@
+// src/components/sections/CapabilitiesSection.tsx
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { capabilities } from "@/data/portfolio";
 

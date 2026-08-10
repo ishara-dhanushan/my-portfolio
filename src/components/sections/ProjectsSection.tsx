@@ -1,3 +1,4 @@
+// src/components/sections/ProjectsSection.tsx
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { projects } from "@/data/portfolio";

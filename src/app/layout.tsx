@@ -1,3 +1,4 @@
+// src/app/layout.tsx
 import type { Metadata } from "next";
 import { Poppins, Montserrat, JetBrains_Mono } from "next/font/google";
 import { Header } from "@/components/layout/Header";

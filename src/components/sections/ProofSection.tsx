@@ -1,3 +1,4 @@
+// src/components/sections/ProofSection.tsx
 import { proofItems } from "@/data/portfolio";
 
 export function ProofSection() {

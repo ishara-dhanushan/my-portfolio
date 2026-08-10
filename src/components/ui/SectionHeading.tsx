@@ -1,3 +1,4 @@
+// src/components/ui/SectionHeading.tsx
 interface SectionHeadingProps {
   eyebrow?: string;
   title: string;

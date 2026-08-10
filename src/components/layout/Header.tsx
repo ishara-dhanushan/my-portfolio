@@ -1,3 +1,4 @@
+// src/components/layout/Header.tsx
 import Link from "next/link";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { profile } from "@/data/portfolio";

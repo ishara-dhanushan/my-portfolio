@@ -1,3 +1,4 @@
+// src/components/layout/Footer.tsx
 import { profile } from "@/data/portfolio";
 
 export function Footer() {

@@ -1,3 +1,4 @@
+// src/components/sections/HeroSection.tsx
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { assetPrefix } from "@/utils/assetPrefix";
 import { profile } from "@/data/portfolio";

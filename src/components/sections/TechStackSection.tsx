@@ -1,3 +1,4 @@
+// src/components/sections/TechStackSection.tsx
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Tag } from "@/components/ui/Tag";
 import { coreStack, techGroups } from "@/data/portfolio";

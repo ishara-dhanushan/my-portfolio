@@ -1,3 +1,4 @@
+// src/types/portfolio.ts
 export interface Profile {
   name: string;
   initials: string;

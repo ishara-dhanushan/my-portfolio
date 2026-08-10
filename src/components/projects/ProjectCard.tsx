@@ -1,3 +1,4 @@
+// src/components/projects/ProjectCard.tsx
 import { Tag } from "@/components/ui/Tag";
 import type { Project } from "@/types/portfolio";
 
@@ -28,7 +29,7 @@ export function ProjectCard({ project }: { project: Project }) {
       <div className="mt-6 flex flex-wrap gap-4 text-sm">
         {project.hasCaseStudy && (
           <a
-            href={`/projects/${project.slug}/`}
+            href={`projects/${project.slug}/`}
             className="font-medium text-primary hover:text-primary-hover"
           >
             View Case Study
