@@ -1,6 +1,6 @@
 // src/components/layout/Header.tsx
 import Link from "next/link";
-import { ButtonLink } from "@/components/ui/ButtonLink";
+import { ButtonAnchor } from "@/components/ui/ButtonAnchor";
 import { profile } from "@/data/portfolio";
 import { MobileMenu } from "./MobileMenu";
 import { assetPrefix } from "@/utils/assetPrefix";
@@ -41,9 +41,9 @@ export function Header() {
         </nav>
 
         <div className="hidden md:block">
-          <ButtonLink href={resumeHref} variant="secondary">
+          <ButtonAnchor href={resumeHref} variant="secondary" download>
             Download CV
-          </ButtonLink>
+          </ButtonAnchor>
         </div>
 
         <MobileMenu links={navLinks} resumeHref={resumeHref} />

@@ -1,5 +1,6 @@
 // src/components/sections/HeroSection.tsx
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { ButtonAnchor } from "@/components/ui/ButtonAnchor";
 import { profile } from "@/data/portfolio";
 
 export function HeroSection() {
@@ -21,9 +22,9 @@ export function HeroSection() {
 
       <div className="mt-8 flex flex-wrap gap-4">
         <ButtonLink href="#projects">View Projects</ButtonLink>
-        <ButtonLink href={resumeHref} variant="secondary">
+        <ButtonAnchor href={resumeHref} variant="secondary" download>
           Download CV
-        </ButtonLink>
+        </ButtonAnchor>
       </div>
 
       <div className="mt-10 flex flex-wrap gap-6 text-sm text-muted-foreground">

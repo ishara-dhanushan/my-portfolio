@@ -1,5 +1,5 @@
 // src/components/sections/ContactSection.tsx
-import { ButtonLink } from "@/components/ui/ButtonLink";
+import { ButtonAnchor } from "@/components/ui/ButtonAnchor";
 import { profile } from "@/data/portfolio";
 
 export function ContactSection() {
@@ -13,13 +13,21 @@ export function ContactSection() {
       </p>
 
       <div className="mt-8 flex flex-wrap justify-center gap-4">
-        <ButtonLink href={`mailto:${profile.email}`}>Email me</ButtonLink>
-        <ButtonLink href={profile.socials.github} variant="secondary">
+        <ButtonAnchor href={`mailto:${profile.email}`}>Email me</ButtonAnchor>
+        <ButtonAnchor
+          href={profile.socials.github}
+          variant="secondary"
+          external
+        >
           GitHub
-        </ButtonLink>
-        <ButtonLink href={profile.socials.linkedin} variant="secondary">
+        </ButtonAnchor>
+        <ButtonAnchor
+          href={profile.socials.linkedin}
+          variant="secondary"
+          external
+        >
           LinkedIn
-        </ButtonLink>
+        </ButtonAnchor>
       </div>
     </section>
   );

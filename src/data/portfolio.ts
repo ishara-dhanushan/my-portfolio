@@ -1,4 +1,5 @@
 // src/data/portfolio.ts
+import { assetPrefix } from "@/utils/assetPrefix";
 import type {
   Credential,
   EducationEntry,
@@ -23,7 +24,7 @@ export const profile: Profile = {
   ],
   location: "Kurunegala, Sri Lanka",
   email: "isharadh2002@gmail.com",
-  resumeUrl: "documents/ishara-dhanushan-cv.pdf",
+  resumeUrl: `${assetPrefix}/documents/ishara-dhanushan-cv.pdf`,
   socials: {
     github: "https://github.com/ishara-dhanushan",
     linkedin: "https://www.linkedin.com/in/ishara-dhanushan",
