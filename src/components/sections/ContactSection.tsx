@@ -4,10 +4,7 @@ import { profile } from "@/data/portfolio";
 
 export function ContactSection() {
   return (
-    <section
-      id="contact"
-      className="mx-auto max-w-[1200px] px-6 py-24 text-center"
-    >
+    <section id="contact" className="mx-auto max-w-300 px-6 py-24 text-center">
       <h2 className="font-heading text-3xl font-semibold text-foreground">
         Let&apos;s build useful software together.
       </h2>

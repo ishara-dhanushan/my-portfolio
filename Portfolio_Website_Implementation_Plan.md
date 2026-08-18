@@ -39,14 +39,18 @@ This plan is organized as a working specification. It defines what the portfolio
 
 This model gives recruiters a complete overview without requiring repeated navigation, while still providing enough depth for technical reviewers who want to inspect major projects.
 
+> **Current skeleton alignment**
+>
+> Version 1.0 is now aligned with the implemented portfolio skeleton. The current dark visual system, one-blue-accent approach, 1200 px content width, rounded card language, Poppins body typography, Montserrat heading typography, and JetBrains Mono technical labels are treated as the working website design direction. The content order is adjusted so About is the first full content section after the introductory hero/proof area, followed immediately by Education and academic performance.
+
 ## Recommended routes
 
-| **Route**                  | **Type**            | **Content**                                                                                                                                                   |
-| -------------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| /                          | Main portfolio      | Hero, proof, experience, all projects, Tech Stack, engineering capabilities, about, education, academic performance, certifications, Medium articles, contact |
-| /projects/constructpro     | Featured case study | Construction ERP architecture, role, engineering decisions, and screenshots                                                                                   |
-| /projects/kochi-guru-pizza | Featured case study | Client project, authentication, ordering flow, and admin functions                                                                                            |
-| /projects/fuelwise         | Featured case study | Multi-role system, Spring Boot backend, React/Flutter clients, and quota workflow                                                                             |
+| **Route**                  | **Type**            | **Content**                                                                                                                                                               |
+| -------------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| /                          | Main portfolio      | Hero and proof strip, About, education and academic performance, experience, all projects, Tech Stack, engineering capabilities, certifications, Medium articles, contact |
+| /projects/constructpro     | Featured case study | Construction ERP architecture, role, engineering decisions, and screenshots                                                                                               |
+| /projects/kochi-guru-pizza | Featured case study | Client project, authentication, ordering flow, and admin functions                                                                                                        |
+| /projects/fuelwise         | Featured case study | Multi-role system, Spring Boot backend, React/Flutter clients, and quota workflow                                                                                         |
 
 The portfolio should keep exactly these three dedicated case-study routes for Version 1.0. All remaining projects should appear as supporting cards on the main page rather than receiving separate pages.
 
@@ -56,7 +60,7 @@ The portfolio should keep exactly these three dedicated case-study routes for Ve
 
 - Recruiters can scan the complete profile in a few minutes without opening multiple pages.
 
-- Anchor navigation makes Experience, Projects, Tech Stack, About, Education, Articles, and Contact immediately accessible.
+- Anchor navigation makes About, Education, Experience, Projects, Tech Stack, Articles, and Contact immediately accessible.
 
 - The strongest information remains close together, improving the professional story.
 
@@ -130,23 +134,22 @@ The portfolio should present 'fourth-year Software Engineering undergraduate' as
 
 # 3. Main-page content specification
 
-The home page should be built as a sequence of focused sections. Each section must have one purpose and a clear connection to the next section.
+The home page should be built as a sequence of focused sections. Each section must have one purpose and a clear connection to the next section. In the current skeleton, the proof strip can remain as its own component for maintainability, but it should visually read as a continuation of the hero rather than as a separate navigable content section.
 
-| **Order** | **Section**              | **Purpose**                                               |
-| --------- | ------------------------ | --------------------------------------------------------- |
-| 01        | Header                   | Identity, anchor navigation, resume action                |
-| 02        | Hero                     | Role, value proposition, primary calls to action          |
-| 03        | Professional proof       | Fast evidence: internship, production work, core stack    |
-| 04        | Experience               | ByteSquad Labs responsibilities and engineering practices |
-| 05        | Featured projects        | Three strongest project case studies                      |
-| 06        | Supporting projects      | Additional web and mobile builds                          |
-| 07        | Tech Stack               | Curated technologies grouped by engineering area          |
-| 08        | Engineering capabilities | Practices that show how the stack is applied              |
-| 09        | About                    | Professional background and working style                 |
-| 10        | Education and academics  | Degree, academic domains, GPA, and A/L performance        |
-| 11        | Certifications           | Relevant professional and technical certifications        |
-| 12        | Medium articles          | Latest software-engineering writing loaded at runtime     |
-| 13        | Contact and footer       | Clear next action and verified professional links         |
+| **Order** | **Section**               | **Purpose**                                               |
+| --------- | ------------------------- | --------------------------------------------------------- |
+| 01        | Header                    | Identity, anchor navigation, resume action                |
+| 02        | Hero + professional proof | Role, value proposition, calls to action, fast evidence   |
+| 03        | About                     | Professional background, engineering focus, working style |
+| 04        | Education and academics   | Degree, academic domains, GPA, and A/L performance        |
+| 05        | Experience                | ByteSquad Labs responsibilities and engineering practices |
+| 06        | Featured projects         | Three strongest project case studies                      |
+| 07        | Supporting projects       | Additional web, mobile, and UI/UX builds                  |
+| 08        | Tech Stack                | Curated technologies grouped by engineering area          |
+| 09        | Engineering capabilities  | Practices that show how the stack is applied              |
+| 10        | Certifications            | Relevant professional and technical certifications        |
+| 11        | Medium articles           | Latest software-engineering writing loaded at runtime     |
+| 12        | Contact and footer        | Clear next action and verified professional links         |
 
 ## 3.1 Header
 
@@ -154,7 +157,7 @@ Required items:
 
 - Text logo or initials: Ishara Dhanushan / ID.
 
-- Anchor links: Experience, Projects, Tech Stack, About, Education, Articles, Contact.
+- Anchor links: About, Education, Experience, Projects, Tech Stack, Articles, Contact.
 
 - Primary action: Download CV.
 
@@ -162,7 +165,7 @@ Required items:
 
 - Mobile menu implemented as an isolated Client Component.
 
-## 3.2 Hero
+## 3.2 Hero and professional proof
 
 | **Item**         | **Recommended content**                                                                                                                                                        |
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -175,7 +178,7 @@ Required items:
 
 Optional visual: a professional portrait or a restrained abstract interface graphic. Do not use a large animated 3D scene that competes with the headline.
 
-## 3.3 Professional proof strip
+The professional proof strip should stay directly below the hero and share the same introductory visual rhythm. It does not need its own navigation item. Keeping `ProofSection.tsx` as a separate Server Component is still appropriate because it keeps the data and layout modular.
 
 | **Proof label** | **Evidence**                                      |
 | --------------- | ------------------------------------------------- |
@@ -185,7 +188,54 @@ Optional visual: a professional portrait or a restrained abstract interface grap
 | Backend         | REST APIs, JWT, RBAC, PostgreSQL, MongoDB         |
 | Academics       | B.Sc. Software Engineering; current GPA 3.51/4.00 |
 
-## 3.4 Experience
+## 3.3 About
+
+About text should be limited to two short paragraphs. It should explain the engineering focus, practical experience, learning mindset, and collaborative working style without repeating the hero section.
+
+Recommended supporting details:
+
+- Fourth-year Software Engineering undergraduate based in Kurunegala, Sri Lanka.
+
+- Practical experience across full-stack web applications, REST APIs, browser extensions, mobile applications, debugging, refactoring, and agile delivery.
+
+- Interest in building scalable, maintainable, and user-focused software products.
+
+Placement rule:
+
+- About should be the **first full content section** after the hero/proof introduction.
+
+- Do not place About below Projects, Tech Stack, or Engineering Capabilities. Visitors should understand who the engineer is before they inspect the detailed evidence.
+
+- Keep the section concise so moving it earlier improves context without slowing down the page.
+
+## 3.4 Education and academic performance
+
+Education should be displayed as a dedicated section because the degree, GPA, academic domains, and A/L results strengthen the overall profile. Use a clean timeline or two-card layout rather than hiding these details inside the About section.
+
+| **Level**                                    | **Institution and period**                             | **Academic performance and details**                                                                                                             |
+| -------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| B.Sc. (Hons.) Software Engineering           | University of Kelaniya, Sri Lanka; July 2023 - Present | Current GPA: 3.51/4.00. Academic domains: Advanced Web Applications, Mobile Computing Applications, and Data Science & Engineering Applications. |
+| GCE Advanced Level - Physical Science Stream | Sri Sumangala College, Wariyapola; 2019 - 2022         | Z-Score: 1.61. Combined Mathematics: B, Physics: A, Chemistry: B.                                                                                |
+
+Presentation rules:
+
+- Place the current degree first and give the GPA clear visual prominence without making it look like a dashboard metric.
+
+- Show academic domains as compact text or tags only when they support the software-engineering profile.
+
+- Keep A/L results concise and secondary to the university degree.
+
+- Do not include research projects or research methodology in this section.
+
+Placement rule:
+
+- Education should appear immediately after About because the portfolio represents a current fourth-year undergraduate.
+
+- This early placement gives recruiters the degree and GPA context before they reach professional experience and project depth.
+
+- Keep the university degree visually dominant and the A/L result block more compact.
+
+## 3.5 Experience
 
 Display the ByteSquad Labs internship as one strong experience entry rather than several disconnected cards. The experience section may describe responsibilities, technologies, and engineering practices, but it must not present ByteSquad client or internal work as personal portfolio projects.
 
@@ -219,7 +269,7 @@ Portfolio boundary:
 
 - Use the internship only as evidence of professional experience and engineering practice.
 
-## 3.5 Featured projects
+## 3.6 Featured projects
 
 | **Priority** | **Project**      | **Reason**                        | **Presentation**     |
 | ------------ | ---------------- | --------------------------------- | -------------------- |
@@ -241,7 +291,7 @@ Portfolio boundary:
 
 - Actions: View Case Study, GitHub, Live Demo when available.
 
-## 3.6 Supporting projects
+## 3.7 Supporting projects
 
 The main Projects section should include every non-ByteSquad project currently represented in the existing portfolio ZIP. The project gallery therefore contains three featured projects and eight supporting projects.
 
@@ -293,7 +343,7 @@ Each supporting project card should contain:
 
 - Keep exactly three dedicated project pages in Version 1.0. Supporting cards link only to their available repository, demo, video, or design resources.
 
-## 3.7 Tech Stack
+## 3.8 Tech Stack
 
 The portfolio must include a distinct **Tech Stack** section. Its purpose is to let a recruiter understand the technologies used in real software-engineering work within a few seconds. This section must be curated from the current CVs, internship work, and project evidence rather than copied from the legacy portfolio.
 
@@ -349,7 +399,7 @@ The portfolio must include a distinct **Tech Stack** section. Its purpose is to 
 
 5. Optional links from selected technologies to the project cards that demonstrate them; this can be added after the initial launch.
 
-## 3.8 Engineering capabilities
+## 3.9 Engineering capabilities
 
 The Engineering Capabilities section should explain how the technologies are applied. It should not repeat the same technology list from the Tech Stack section.
 
@@ -371,38 +421,7 @@ The Engineering Capabilities section should explain how the technologies are app
 
 - Clear contribution boundaries in team and client projects.
 
-## 3.9 About
-
-About text should be limited to two short paragraphs. It should explain the engineering focus, practical experience, learning mindset, and collaborative working style without repeating the hero section.
-
-Recommended supporting details:
-
-- Fourth-year Software Engineering undergraduate based in Kurunegala, Sri Lanka.
-
-- Practical experience across full-stack web applications, REST APIs, browser extensions, mobile applications, debugging, refactoring, and agile delivery.
-
-- Interest in building scalable, maintainable, and user-focused software products.
-
-## 3.10 Education and academic performance
-
-Education should be displayed as a dedicated section because the degree, GPA, academic domains, and A/L results strengthen the overall profile. Use a clean timeline or two-card layout rather than hiding these details inside the About section.
-
-| **Level**                                    | **Institution and period**                             | **Academic performance and details**                                                                                                             |
-| -------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| B.Sc. (Hons.) Software Engineering           | University of Kelaniya, Sri Lanka; July 2023 - Present | Current GPA: 3.51/4.00. Academic domains: Advanced Web Applications, Mobile Computing Applications, and Data Science & Engineering Applications. |
-| GCE Advanced Level - Physical Science Stream | Sri Sumangala College, Wariyapola; 2019 - 2022         | Z-Score: 1.61. Combined Mathematics: B, Physics: A, Chemistry: B.                                                                                |
-
-Presentation rules:
-
-- Place the current degree first and give the GPA clear visual prominence without making it look like a dashboard metric.
-
-- Show academic domains as compact text or tags only when they support the software-engineering profile.
-
-- Keep A/L results concise and secondary to the university degree.
-
-- Do not include research projects or research methodology in this section.
-
-## 3.11 Certifications
+## 3.10 Certifications
 
 | **Certification**                | **Issuer**        |
 | -------------------------------- | ----------------- |
@@ -420,7 +439,7 @@ Presentation rules:
 
 - Exclude hackathons, competitions, awards, volunteering roles, research activities, and lecturer references.
 
-## 3.12 Medium articles
+## 3.11 Medium articles
 
 The portfolio must include a dedicated **Latest Articles** section that displays recent Medium posts dynamically. New posts must appear without rebuilding or redeploying the Next.js application.
 
@@ -477,7 +496,7 @@ Display the latest three articles on the home page. A fourth to sixth article ma
 
 - Do not copy the legacy portfolio's exact API integration. Reuse only the general browser-fetching idea and implement it through a typed, replaceable, and failure-tolerant feed layer.
 
-## 3.13 Contact and footer
+## 3.12 Contact and footer
 
 - Contact headline: Let's build useful software together.
 
@@ -563,13 +582,15 @@ Every featured project page should follow the same information structure. Consis
 
 The site should feel futuristic through structure, depth, motion, typography, and technical detail—not through many bright colors. The preferred direction is a restrained developer-tool and product-dashboard aesthetic.
 
-| **Token**  | **Direction**               | **Use**                                         |
-| ---------- | --------------------------- | ----------------------------------------------- |
-| Background | Near black or deep charcoal | Primary site canvas                             |
-| Surface    | Slightly lighter charcoal   | Cards, panels, navigation                       |
-| Text       | White and cool gray         | Headings and body text                          |
-| Accent     | One cool blue               | Links, focus states, selected tags, subtle glow |
-| Borders    | Low-contrast gray           | Card edges and section separation               |
+| **Token**     | **Current skeleton direction** | **Use**                                         |
+| ------------- | ------------------------------ | ----------------------------------------------- |
+| Background    | Zinc 950 / near black          | Primary site canvas                             |
+| Surface       | Zinc 900                       | Cards, panels, alternate section surfaces       |
+| Surface hover | Zinc 800                       | Hover emphasis and secondary interactive states |
+| Text          | Zinc 50 and Zinc 400           | Primary and muted text                          |
+| Accent        | Blue 500 with Blue 400 hover   | Links, buttons, focus states, selected tags     |
+| Accent subtle | Blue 950 / Blue 300            | Technology tags and restrained badge surfaces   |
+| Borders       | Zinc 800                       | Card edges and section separation               |
 
 > **Color rule**
 >
@@ -577,25 +598,39 @@ The site should feel futuristic through structure, depth, motion, typography, an
 
 ## Typography
 
-- Use one clean sans-serif family for body and headings.
+The website typography should follow the current skeleton rather than the earlier generic font recommendation.
 
-- Use a monospace face only for labels, technology tags, metrics, and technical details.
+| **Role**            | **Family**     | **Recommended weights** | **Use**                                                                  |
+| ------------------- | -------------- | ----------------------- | ------------------------------------------------------------------------ |
+| Body and general UI | Poppins        | 400, 500, 600           | Paragraphs, navigation, buttons, supporting copy                         |
+| Headings            | Montserrat     | 600, 700, 800           | Hero heading, section headings, card titles                              |
+| Technical accent    | JetBrains Mono | Variable/default        | Eyebrows, dates, project ownership labels, tags, small technical details |
 
-- Maintain strong hierarchy: large hero heading, clear section headings, compact supporting text.
+Implementation rules:
+
+- Continue loading all three families with `next/font/google` in `src/app/layout.tsx`.
+
+- Keep the existing CSS aliases: `--font-sans`, `--font-heading`, and `--font-mono`.
+
+- Use Poppins as the default body family and Montserrat only where hierarchy is needed.
+
+- Use JetBrains Mono sparingly; it should signal technical metadata, not become the main reading font.
+
+- Maintain strong hierarchy: a large Montserrat hero heading, clear Montserrat section headings, and compact Poppins supporting text.
 
 - Keep line lengths comfortable and avoid extremely thin font weights.
 
 ## Layout rules
 
-- Maximum content width around 1120-1200 px.
+- Use the current `max-w-[1200px]` content container as the default maximum width.
 
-- Generous vertical spacing between major sections.
+- Keep the current spacing rhythm: approximately `py-20` for standard sections, a larger hero (`py-24` to `sm:py-32`), and a larger final contact block.
 
 - Two-column layout only where it improves scanning; stack content on mobile.
 
 - Use asymmetry carefully in the hero or featured project cards, but keep content alignment disciplined.
 
-- Use consistent card radius, border, padding, and image ratio across the site.
+- Keep the current rounded visual language: `rounded-2xl` for content cards and `rounded-full` for buttons and tags, with low-contrast borders.
 
 ## Motion rules
 
@@ -660,6 +695,7 @@ import { ExperienceSection } from "@/components/sections/ExperienceSection";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { MediumPostsSection } from "@/components/sections/MediumPostsSection";
 import { ProjectsSection } from "@/components/sections/ProjectsSection";
+import { ProofSection } from "@/components/sections/ProofSection";
 import { TechStackSection } from "@/components/sections/TechStackSection";
 
 export const metadata: Metadata = {
@@ -673,12 +709,13 @@ export default function HomePage() {
   return (
     <main>
       <HeroSection />
+      <ProofSection />
+      <AboutSection />
+      <EducationSection />
       <ExperienceSection />
       <ProjectsSection />
       <TechStackSection />
       <CapabilitiesSection />
-      <AboutSection />
-      <EducationSection />
       <CredentialsSection />
       <MediumPostsSection />
       <ContactSection />
@@ -899,17 +936,17 @@ Store repeatable content in src/data/portfolio.ts and define interfaces in src/t
 
 # 7. Implementation roadmap
 
-| **Phase** | **Focus**           | **Deliverables**                                                                                                                                                                                             |
-| --------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Phase 1   | Content preparation | Verify summaries, dates, links, project status, contribution scope, and screenshots for all eleven projects                                                                                                  |
-| Phase 2   | Foundation          | Update layout, metadataBase, fonts, global design tokens, header, footer                                                                                                                                     |
-| Phase 3   | Content model       | Create types and data files for profile, generalized experience, eleven projects, technology groups, capabilities, education, and credentials                                                                |
-| Phase 4   | Main page           | Build hero, proof, generalized experience, three featured projects, eight supporting projects, Tech Stack, engineering capabilities, about, education, certifications, Medium articles, and contact sections |
-| Phase 5   | Dynamic articles    | Implement the browser-side Medium feed adapter, cache, filtering, cards, and fallback states                                                                                                                 |
-| Phase 6   | Case studies        | Create dynamic route, static params, metadata, and three detailed project pages                                                                                                                              |
-| Phase 7   | Visual refinement   | Screenshots, diagrams, responsive layout, one-accent design, motion wrappers                                                                                                                                 |
-| Phase 8   | Quality             | Accessibility, SEO, performance, reduced motion, keyboard navigation                                                                                                                                         |
-| Phase 9   | Deployment          | Format, lint, build, verify out directory, deploy, test production routes                                                                                                                                    |
+| **Phase** | **Focus**           | **Deliverables**                                                                                                                                                                                                         |
+| --------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Phase 1   | Content preparation | Verify summaries, dates, links, project status, contribution scope, and screenshots for all eleven projects                                                                                                              |
+| Phase 2   | Foundation          | Keep Poppins, Montserrat, and JetBrains Mono; refine metadataBase, global design tokens, header, and footer                                                                                                              |
+| Phase 3   | Content model       | Create types and data files for profile, generalized experience, eleven projects, technology groups, capabilities, education, and credentials                                                                            |
+| Phase 4   | Main page           | Build hero/proof introduction, About, Education, generalized experience, three featured projects, eight supporting projects, Tech Stack, engineering capabilities, certifications, Medium articles, and contact sections |
+| Phase 5   | Dynamic articles    | Implement the browser-side Medium feed adapter, cache, filtering, cards, and fallback states                                                                                                                             |
+| Phase 6   | Case studies        | Create dynamic route, static params, metadata, and three detailed project pages                                                                                                                                          |
+| Phase 7   | Visual refinement   | Screenshots, diagrams, responsive layout, one-accent design, motion wrappers                                                                                                                                             |
+| Phase 8   | Quality             | Accessibility, SEO, performance, reduced motion, keyboard navigation                                                                                                                                                     |
+| Phase 9   | Deployment          | Format, lint, build, verify out directory, deploy, test production routes                                                                                                                                                |
 
 ## 7.1 File-by-file build order
 
@@ -939,7 +976,7 @@ Store repeatable content in src/data/portfolio.ts and define interfaces in src/t
 
 ## 7.2 Minimum launch scope
 
-- Complete one-page portfolio with all thirteen sections.
+- Complete the one-page portfolio using the section order defined in Section 3, with About and Education positioned near the top.
 
 - Three featured project cards and all three complete case-study pages.
 
@@ -975,6 +1012,8 @@ Store repeatable content in src/data/portfolio.ts and define interfaces in src/t
 
 - [ ] Education, GPA, academic domains, A/L performance, and certifications match the CVs.
 
+- [ ] About is the first full content section after the hero/proof introduction, with Education immediately after it.
+
 - [ ] No hackathon, competition, award, or other achievement content appears in the portfolio.
 
 - [ ] No research content appears in the portfolio.
@@ -994,6 +1033,8 @@ Store repeatable content in src/data/portfolio.ts and define interfaces in src/t
 - [ ] Every displayed technology is supported by current CV, internship, or project evidence.
 
 - [ ] The Tech Stack is a distinct section and is not merged into About or Engineering Capabilities.
+
+- [ ] Website typography uses Poppins for body/UI, Montserrat for headings, and JetBrains Mono only for technical metadata.
 
 - [ ] The Medium section displays only software-engineering articles and excludes research or unrelated content.
 
@@ -1062,12 +1103,12 @@ Store repeatable content in src/data/portfolio.ts and define interfaces in src/t
 | **Priority** | **Item**                   | **Required content**                                                                                                                   |
 | ------------ | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | Must         | Hero                       | Professional headline, summary, project and CV actions, social links                                                                   |
+| Must         | About                      | First full content section after the hero/proof introduction; two-paragraph professional profile and working style                     |
+| Must         | Education/Academics        | Early-page B.Sc. details, GPA, academic domains, A/L stream, Z-score, and grades                                                       |
 | Must         | Experience                 | ByteSquad Labs role, period, stack, generalized responsibilities, and engineering practices; no named work-project showcase            |
 | Must         | Featured projects          | ConstructPro ERP, Kochi Guru Pizza, FuelWise.lk                                                                                        |
 | Must         | Tech Stack                 | Curated languages, frameworks, databases, mobile technologies, architecture, security, and delivery tools                              |
 | Must         | Engineering capabilities   | API design, security, maintainability, debugging, collaboration, and deployment practices                                              |
-| Must         | About                      | Two-paragraph professional profile and working style                                                                                   |
-| Must         | Education/Academics        | B.Sc. details, GPA, academic domains, A/L stream, Z-score, and grades                                                                  |
 | Must         | Medium articles            | Runtime-loaded latest software-engineering posts, safe excerpts, dates, images, and links                                              |
 | Must         | Contact                    | Email, GitHub, LinkedIn, Medium profile                                                                                                |
 | Must         | Metadata                   | Global defaults and page-specific metadata for every route                                                                             |
@@ -1081,8 +1122,8 @@ Store repeatable content in src/data/portfolio.ts and define interfaces in src/t
 
 > **Recommended implementation**
 >
-> Build one primary portfolio page with anchor navigation, a dedicated Tech Stack section, separate Engineering Capabilities content, complete education and academic details, certifications, and a dynamically updated Medium Articles section. Create dedicated pages only for the strongest project case studies. Keep every page.tsx as a Server Component, export page-specific metadata, and isolate animation, the runtime Medium feed, and other browser interactivity in small Client Components.
+> Build one primary portfolio page with the hero/proof introduction followed immediately by About and Education, then Experience, Projects, Tech Stack, Engineering Capabilities, Certifications, dynamically updated Medium Articles, and Contact. Keep the current Poppins + Montserrat + JetBrains Mono typography system and restrained dark/blue visual language. Create dedicated pages only for the three strongest project case studies. Keep every page.tsx as a Server Component, export page-specific metadata, and isolate animation, the runtime Medium feed, and other browser interactivity in small Client Components.
 
 ## **Source basis**
 
-The content inventory was derived from the two supplied CV versions and the configured Next.js project. The software-engineering-focused CV was used as the primary source where the versions differed. Education, GPA, academic domains, A/L performance, certifications, a dedicated Tech Stack, and dynamically loaded software-engineering Medium articles are included. Research projects, volunteering information, lecturer references, hackathons, competitions, awards, and other achievement content are excluded. The previous basic portfolio ZIP was reviewed to identify the existing non-work project inventory, available screenshots and link types, and the requirements for a visible Tech Stack and browser-updated Medium feed. Its layout, visual design, technology prioritization, and exact feed implementation were not treated as the source of truth. The technical architecture was aligned with the current App Router, static-export, metadata, and GitHub Pages setup already present in the Next.js repository.
+The content inventory was derived from the two supplied CV versions and the configured Next.js project. The software-engineering-focused CV was used as the primary source where the versions differed. Education, GPA, academic domains, A/L performance, certifications, a dedicated Tech Stack, and dynamically loaded software-engineering Medium articles are included. Research projects, volunteering information, lecturer references, hackathons, competitions, awards, and other achievement content are excluded. The earlier basic portfolio ZIP was used to identify the complete non-work project inventory and available link types. The newer `my-portfolio_v3` skeleton is now treated as the implementation reference for the working visual system and component structure: dark Zinc surfaces, one blue accent, a 1200 px container, rounded cards, Poppins body text, Montserrat headings, JetBrains Mono technical labels, Server Component sections, and the existing App Router/static-export setup. The plan intentionally changes the skeleton's current content order by moving About and Education near the top because this produces a clearer profile for a fourth-year Software Engineering undergraduate.

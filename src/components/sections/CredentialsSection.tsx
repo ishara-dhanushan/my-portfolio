@@ -4,7 +4,7 @@ import { credentials } from "@/data/portfolio";
 
 export function CredentialsSection() {
   return (
-    <section id="certifications" className="mx-auto max-w-[1200px] px-6 py-20">
+    <section id="certifications" className="mx-auto max-w-300 px-6 py-20">
       <SectionHeading
         eyebrow="Certifications"
         title="Relevant certifications"

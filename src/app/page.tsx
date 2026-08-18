@@ -2,12 +2,12 @@
 import type { Metadata } from "next";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { ProofSection } from "@/components/sections/ProofSection";
+import { AboutSection } from "@/components/sections/AboutSection";
+import { EducationSection } from "@/components/sections/EducationSection";
 import { ExperienceSection } from "@/components/sections/ExperienceSection";
 import { ProjectsSection } from "@/components/sections/ProjectsSection";
 import { TechStackSection } from "@/components/sections/TechStackSection";
 import { CapabilitiesSection } from "@/components/sections/CapabilitiesSection";
-import { AboutSection } from "@/components/sections/AboutSection";
-import { EducationSection } from "@/components/sections/EducationSection";
 import { CredentialsSection } from "@/components/sections/CredentialsSection";
 import { MediumPostsSection } from "@/components/sections/MediumPostsSection";
 import { ContactSection } from "@/components/sections/ContactSection";
@@ -24,12 +24,12 @@ export default function HomePage() {
     <main>
       <HeroSection />
       <ProofSection />
+      <AboutSection />
+      <EducationSection />
       <ExperienceSection />
       <ProjectsSection />
       <TechStackSection />
       <CapabilitiesSection />
-      <AboutSection />
-      <EducationSection />
       <CredentialsSection />
       <MediumPostsSection />
       <ContactSection />

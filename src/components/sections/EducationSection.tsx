@@ -5,7 +5,7 @@ import { education } from "@/data/portfolio";
 export function EducationSection() {
   return (
     <section id="education" className="border-y border-border bg-surface">
-      <div className="mx-auto max-w-[1200px] px-6 py-20">
+      <div className="mx-auto max-w-300 px-6 py-20">
         <SectionHeading eyebrow="Education" title="Academic background" />
 
         <div className="mt-10 space-y-6">

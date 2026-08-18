@@ -5,7 +5,7 @@ import { experience } from "@/data/portfolio";
 
 export function ExperienceSection() {
   return (
-    <section id="experience" className="mx-auto max-w-[1200px] px-6 py-20">
+    <section id="experience" className="mx-auto max-w-300 px-6 py-20">
       <SectionHeading eyebrow="Experience" title="Professional experience" />
 
       <div className="mt-10 rounded-2xl border border-border bg-surface p-8">

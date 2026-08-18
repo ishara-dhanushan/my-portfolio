@@ -4,7 +4,7 @@ import { capabilities } from "@/data/portfolio";
 
 export function CapabilitiesSection() {
   return (
-    <section id="capabilities" className="mx-auto max-w-[1200px] px-6 py-20">
+    <section id="capabilities" className="mx-auto max-w-300 px-6 py-20">
       <SectionHeading
         eyebrow="Engineering Capabilities"
         title="How the stack gets applied"

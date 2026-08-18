@@ -10,7 +10,7 @@ import { profile } from "@/data/portfolio";
 export function MediumPostsSection() {
   return (
     <section id="articles" className="border-y border-border bg-surface">
-      <div className="mx-auto max-w-[1200px] px-6 py-20">
+      <div className="mx-auto max-w-300 px-6 py-20">
         <SectionHeading
           eyebrow="Writing"
           title="Latest articles"

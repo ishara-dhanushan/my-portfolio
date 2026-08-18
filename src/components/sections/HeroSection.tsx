@@ -1,13 +1,12 @@
 // src/components/sections/HeroSection.tsx
 import { ButtonLink } from "@/components/ui/ButtonLink";
-import { assetPrefix } from "@/utils/assetPrefix";
 import { profile } from "@/data/portfolio";
 
 export function HeroSection() {
   const resumeHref = profile.resumeUrl;
 
   return (
-    <section id="top" className="mx-auto max-w-[1200px] px-6 py-24 sm:py-32">
+    <section id="top" className="mx-auto max-w-300 px-6 py-24 sm:py-32">
       <p className="font-mono text-sm uppercase tracking-wider text-primary">
         {profile.eyebrow}
       </p>
