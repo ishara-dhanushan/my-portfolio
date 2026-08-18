@@ -3,15 +3,16 @@ import Link from "next/link";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { profile } from "@/data/portfolio";
 import { MobileMenu } from "./MobileMenu";
+import { assetPrefix } from "@/utils/assetPrefix";
 
 const navLinks = [
-  { href: "#experience", label: "Experience" },
-  { href: "#projects", label: "Projects" },
-  { href: "#tech-stack", label: "Tech Stack" },
-  { href: "#about", label: "About" },
-  { href: "#education", label: "Education" },
-  { href: "#articles", label: "Articles" },
-  { href: "#contact", label: "Contact" },
+  { href: `${assetPrefix}/#experience`, label: "Experience" },
+  { href: `${assetPrefix}/#projects`, label: "Projects" },
+  { href: `${assetPrefix}/#tech-stack`, label: "Tech Stack" },
+  { href: `${assetPrefix}/#about`, label: "About" },
+  { href: `${assetPrefix}/#education`, label: "Education" },
+  { href: `${assetPrefix}/#articles`, label: "Articles" },
+  { href: `${assetPrefix}/#contact`, label: "Contact" },
 ];
 
 export function Header() {
