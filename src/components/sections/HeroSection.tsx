@@ -22,7 +22,7 @@ export function HeroSection() {
 
       <div className="mt-8 flex flex-wrap gap-4">
         <ButtonLink href="#projects">View Projects</ButtonLink>
-        <ButtonAnchor href={resumeHref} variant="secondary" download>
+        <ButtonAnchor href={resumeHref} variant="secondary" external>
           Download CV
         </ButtonAnchor>
       </div>

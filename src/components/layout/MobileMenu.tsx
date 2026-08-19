@@ -39,6 +39,8 @@ export function MobileMenu({ links, resumeHref }: MobileMenuProps) {
             ))}
             <a
               href={resumeHref}
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-2 inline-flex h-11 items-center justify-center rounded-full bg-primary px-6 text-sm font-medium text-primary-foreground"
             >
               Download CV
