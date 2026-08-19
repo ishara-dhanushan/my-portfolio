@@ -35,8 +35,10 @@ interface CacheShape {
   posts: MediumPost[];
 }
 
-/** Raw shape returned by rss2json-compatible providers. Treated defensively —
- * every field is read as unknown and validated before use. */
+/**
+ * Raw item shape returned by rss2json-compatible providers.
+ * Treated defensively — every field is read as unknown and validated before use.
+ */
 interface RawFeedItem {
   title?: unknown;
   link?: unknown;
@@ -49,31 +51,48 @@ interface RawFeedItem {
   categories?: unknown;
 }
 
+/**
+ * Top-level response structure from the RSS-to-JSON API.
+ */
 interface RawFeedResponse {
   status?: unknown;
+  message?: unknown;
   items?: unknown;
 }
 
+/**
+ * Type guard to safely check if an unknown value is a non-null object record.
+ */
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
 }
 
-/** Strips HTML down to plain text without ever using dangerouslySetInnerHTML. */
+/**
+ * Strips HTML down to plain text using the browser's native DOMParser.
+ * Avoids dangerouslySetInnerHTML and securely extracts clean textual content.
+ */
 function stripHtml(html: string): string {
   if (typeof window === "undefined" || !window.DOMParser) {
-    // Extremely defensive fallback if DOMParser is ever unavailable.
+    // Defensive fallback if DOMParser is ever unavailable
     return html.replace(/<[^>]*>/g, " ");
   }
   const doc = new DOMParser().parseFromString(html, "text/html");
   return doc.body.textContent ?? "";
 }
 
+/**
+ * Normalizes whitespace and truncates text to a maximum character length,
+ * appending an ellipsis (…) if truncation occurred.
+ */
 function truncate(text: string, maxLength: number): string {
   const clean = text.replace(/\s+/g, " ").trim();
   if (clean.length <= maxLength) return clean;
   return `${clean.slice(0, maxLength).trimEnd()}…`;
 }
 
+/**
+ * Formats an ISO-8601 date string into a user-friendly format (e.g., "13 May 2026").
+ */
 function formatDate(iso: string): string {
   const date = new Date(iso);
   if (Number.isNaN(date.getTime())) return "";
@@ -84,21 +103,88 @@ function formatDate(iso: string): string {
   });
 }
 
+/**
+ * Detects whether an image URL is Medium's 1x1 statistical tracking pixel.
+ * Medium appends a tracking pixel (medium.com/_/stat) at the end of every post's HTML.
+ */
+function isTrackingPixel(url: string): boolean {
+  return /medium\.com\/_\/stat/i.test(url) || /stat\?event=/i.test(url);
+}
+
+/**
+ * Decodes common XML/HTML entities found in image URLs or attributes (e.g. &amp; -> &).
+ */
+function decodeHtmlEntities(str: string): string {
+  return str
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
+}
+
+/**
+ * Extracts the primary cover image URL from an article item.
+ * Checks the thumbnail field, enclosure links, and <img> tags in the HTML body,
+ * while explicitly ignoring Medium's tracking pixels so posts without images
+ * fall back cleanly to the brand gradient.
+ */
 function extractCoverImage(item: RawFeedItem, html: string): string | null {
-  if (typeof item.thumbnail === "string" && item.thumbnail.length > 0) {
-    return item.thumbnail;
+  // 1. Check thumbnail property
+  if (
+    typeof item.thumbnail === "string" &&
+    item.thumbnail.length > 0 &&
+    !isTrackingPixel(item.thumbnail)
+  ) {
+    return decodeHtmlEntities(item.thumbnail);
   }
+
+  // 2. Check enclosure media link
   if (
     isRecord(item.enclosure) &&
     typeof item.enclosure.link === "string" &&
-    item.enclosure.link.length > 0
+    item.enclosure.link.length > 0 &&
+    !isTrackingPixel(item.enclosure.link)
   ) {
-    return item.enclosure.link;
+    return decodeHtmlEntities(item.enclosure.link);
   }
-  const match = html.match(/<img[^>]+src="([^">]+)"/i);
-  return match?.[1] ?? null;
+
+  // 3. Scan HTML body for content images (skipping tracking pixels)
+  const imgMatches = html.matchAll(/<img[^>]+src=["']([^"']+)["']/gi);
+  for (const match of imgMatches) {
+    const src = match[1];
+    if (src && !isTrackingPixel(src)) {
+      return decodeHtmlEntities(src);
+    }
+  }
+
+  return null;
 }
 
+/**
+ * Normalizes raw date strings into valid ISO-8601 strings.
+ * Converts "YYYY-MM-DD HH:mm:ss" space-separated dates into "YYYY-MM-DDTHH:mm:ssZ"
+ * for consistent parsing across all browser engines (especially Safari/iOS WebKit).
+ */
+function parsePubDate(pubDateStr: string): string {
+  if (!pubDateStr) return "";
+  const normalized = pubDateStr.includes(" ")
+    ? pubDateStr.replace(" ", "T") + "Z"
+    : pubDateStr;
+  const parsedDate = new Date(normalized);
+  if (!Number.isNaN(parsedDate.getTime())) {
+    return parsedDate.toISOString();
+  }
+  const fallbackDate = new Date(pubDateStr);
+  return !Number.isNaN(fallbackDate.getTime())
+    ? fallbackDate.toISOString()
+    : "";
+}
+
+/**
+ * Validates and maps an untrusted raw feed item into a structured MediumPost object.
+ * Returns null if required fields (title, link) are missing or invalid.
+ */
 function normalizeItem(raw: unknown): MediumPost | null {
   if (!isRecord(raw)) return null;
   const item = raw as RawFeedItem;
@@ -111,11 +197,7 @@ function normalizeItem(raw: unknown): MediumPost | null {
     typeof item.guid === "string" && item.guid.length > 0 ? item.guid : link;
 
   const pubDate = typeof item.pubDate === "string" ? item.pubDate : "";
-  const parsedDate = pubDate ? new Date(pubDate) : null;
-  const publishedAt =
-    parsedDate && !Number.isNaN(parsedDate.getTime())
-      ? parsedDate.toISOString()
-      : "";
+  const publishedAt = parsePubDate(pubDate);
 
   const rawHtml =
     (typeof item.content === "string" && item.content) ||
@@ -139,6 +221,10 @@ function normalizeItem(raw: unknown): MediumPost | null {
   };
 }
 
+/**
+ * Safely reads cached Medium posts from localStorage in the browser.
+ * Returns null if running on the server, storage is inaccessible, or cache is missing/corrupt.
+ */
 function readCache(): CacheShape | null {
   if (typeof window === "undefined") return null;
   try {
@@ -154,31 +240,44 @@ function readCache(): CacheShape | null {
   }
 }
 
+/**
+ * Writes fetched Medium posts and current timestamp to localStorage.
+ * Silently ignores storage errors (e.g., quota exceeded or private browsing mode).
+ */
 function writeCache(posts: MediumPost[]): void {
   if (typeof window === "undefined") return;
   try {
     const payload: CacheShape = { cachedAt: Date.now(), posts };
     window.localStorage.setItem(CACHE_KEY, JSON.stringify(payload));
   } catch {
-    // Storage full or disabled (private browsing) — safe to ignore, the
-    // feed simply refetches on every load instead of using the cache.
+    // Storage full or disabled — feed will refetch on next load
   }
 }
 
-/** Returns cached posts immediately (even if stale) for instant paint, or
- * null if nothing is cached yet. */
+/**
+ * Returns cached posts immediately (even if stale) for instant paint after hydration,
+ * or null if nothing is cached yet.
+ */
 export function getCachedMediumPosts(): MediumPost[] | null {
   const cache = readCache();
   return cache?.posts.length ? cache.posts : null;
 }
 
+/**
+ * Determines whether a cache entry is still within its validity duration (TTL).
+ */
 function isCacheFresh(cache: CacheShape): boolean {
   return Date.now() - cache.cachedAt < CACHE_TTL_MS;
 }
 
-/** Always hits the network (per the "fetch on every page load" requirement)
- * unless a fresh cache entry already covers this load, and falls back to
- * whatever is cached if the network call fails. */
+/**
+ * Fetches the latest Medium articles from the configured RSS endpoint.
+ * - Enforces an 8-second request timeout.
+ * - Validates response status and deserializes items.
+ * - Sorts posts in descending chronological order.
+ * - Updates localStorage cache on success.
+ * - Seamlessly falls back to cached posts if the network request fails.
+ */
 export async function fetchMediumPosts(): Promise<MediumFeedResult> {
   const cache = readCache();
 
@@ -204,6 +303,13 @@ export async function fetchMediumPosts(): Promise<MediumFeedResult> {
     }
 
     const data = (await response.json()) as RawFeedResponse;
+    if (data.status !== "ok") {
+      const errorMessage =
+        typeof data.message === "string" && data.message.length > 0
+          ? data.message
+          : "Feed request returned non-OK status.";
+      throw new Error(errorMessage);
+    }
     const rawItems = Array.isArray(data.items) ? data.items : [];
     const posts = rawItems
       .map(normalizeItem)
@@ -217,7 +323,7 @@ export async function fetchMediumPosts(): Promise<MediumFeedResult> {
       .slice(0, MAX_ITEMS);
 
     if (posts.length === 0) {
-      // Nothing valid came back — prefer stale cache over an empty state.
+      // Nothing valid came back — prefer stale cache over an empty state
       return {
         posts: cache?.posts ?? [],
         servedFromCache: Boolean(cache),

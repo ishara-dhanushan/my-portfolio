@@ -58,7 +58,7 @@ export function MediumPostsFeed() {
 
   if (status === "loading") {
     return (
-      <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
+      <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <ArticleSkeleton />
         <ArticleSkeleton />
         <ArticleSkeleton />
@@ -101,11 +101,17 @@ export function MediumPostsFeed() {
   }
 
   return (
-    <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
+    <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {posts.map((post, index) => (
         <div
           key={post.id}
-          className={`h-full ${index >= 3 ? "hidden lg:block" : ""}`}
+          className={`h-full ${
+            index >= 4
+              ? "hidden lg:block"
+              : index >= 3
+                ? "hidden sm:block lg:block"
+                : ""
+          }`}
         >
           <MediumPostCard post={post} />
         </div>

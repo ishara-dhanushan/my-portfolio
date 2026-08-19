@@ -15,7 +15,7 @@ export function ProjectsSection() {
         description="Three case studies with the deepest architecture and delivery story."
       />
 
-      <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
+      <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {featured.map((project) => (
           <ProjectCard key={project.slug} project={project} />
         ))}
@@ -25,7 +25,7 @@ export function ProjectsSection() {
         More projects
       </h3>
 
-      <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {supporting.map((project) => (
           <ProjectCard key={project.slug} project={project} />
         ))}
