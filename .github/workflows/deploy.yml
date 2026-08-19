@@ -40,6 +40,7 @@ jobs:
         env:
           NEXT_PUBLIC_ASSET_PREFIX: /my-portfolio
           NEXT_PUBLIC_IS_EXPORT: true
+          NEXT_PUBLIC_MEDIUM_FEED_API_URL: https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fmedium.com%2Ffeed%2F%40isharadh2002
         run: npm run build
 
       - name: Format build output
