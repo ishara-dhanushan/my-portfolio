@@ -1,5 +1,4 @@
 // src/components/layout/Header.tsx
-import Link from "next/link";
 import { ButtonAnchor } from "@/components/ui/ButtonAnchor";
 import { profile } from "@/data/portfolio";
 import { MobileMenu } from "./MobileMenu";
@@ -21,12 +20,12 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-300 items-center justify-between px-6">
-        <Link
-          href="#top"
+        <a
+          href={`${assetPrefix}/#top`}
           className="font-heading text-lg font-semibold text-foreground"
         >
           {profile.initials}
-        </Link>
+        </a>
 
         <nav className="hidden items-center gap-6 md:flex">
           {navLinks.map((link) => (
@@ -41,7 +40,7 @@ export function Header() {
         </nav>
 
         <div className="hidden md:block">
-          <ButtonAnchor href={resumeHref} variant="secondary" download>
+          <ButtonAnchor href={resumeHref} variant="secondary" external>
             Download CV
           </ButtonAnchor>
         </div>
